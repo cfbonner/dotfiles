@@ -1,0 +1,3 @@
+For fuzzy search: 
+MAC --> brew install the_silver_searcher
+LINUX --> apt-get install silversearcher-ag
