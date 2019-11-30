@@ -1,11 +1,33 @@
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
 let mapleader = "\<Space>"
 
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
-
+" Toggle tabs
+nmap <leader>tc :tabclose<cr>
+nmap <leader>tn :tabnew<cr>
 " Toggle for relative line numbers
 nmap <leader>rn :set relativenumber<cr>
 nmap <leader>nr :set norelativenumber<cr>
+
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " Bind `q` to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<CR>
@@ -29,8 +51,12 @@ endif
 
 " PLUGINS ------------------------------------------------------------ "
 call plug#begin()
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'tpope/vim-surround'
+  Plug 'ngmy/vim-rubocop'
 call plug#end()
 " run to install --> :PlugInstall
 
