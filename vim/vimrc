@@ -6,6 +6,8 @@ nmap <leader>so :source $MYVIMRC<cr>
 " Toggle for relative line numbers
 nmap <leader>rn :set relativenumber<cr>
 nmap <leader>nr :set norelativenumber<cr>
+nmap <leader>non :set nonumber<cr>
+nmap <leader>nn :set number<cr>
 
 " Bind `q` to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<CR>
@@ -27,10 +29,23 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" The Silver Searcher ------------------------------------------------ "
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 " PLUGINS ------------------------------------------------------------ "
 call plug#begin()
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-commentary'
 call plug#end()
 " run to install --> :PlugInstall
 
