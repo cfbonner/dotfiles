@@ -17,6 +17,12 @@ nmap <leader>nr :set norelativenumber<cr>
 nmap <leader>non :set nonumber<cr>
 nmap <leader>nn :set number<cr>
 
+" Go to directory of current file
+nmap <leader>- :e %:h<cr>
+" Toggle nerdTree
+" nmap <D> NERDTreeRemoveFileCm<cr>
+" nmap <C-D> NERDTreeRemoveDirCmd<cr>
+" nmap <C-n> :NERDTreeToggle<cr>
 set undodir=~/.vim/tmp//,.
 set backupdir=~/.vim/tmp//,.
 set directory=~/.vim/tmp//,.
@@ -25,12 +31,17 @@ set directory=~/.vim/tmp//,.
 set splitbelow
 set splitright
 
+" Disable adding new line to files
+set nofixendofline
+
 " Quicker window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" :W also acts as :w
+" command W w
 " Bind `q` to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<CR>
 
@@ -65,6 +76,7 @@ endif
 
 " PLUGINS ------------------------------------------------------------ "
 call plug#begin()
+  " Plug 'scrooloose/nerdtree'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -72,8 +84,12 @@ call plug#begin()
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'ngmy/vim-rubocop'
+  Plug 'slim-template/vim-slim'
 call plug#end()
 " run to install --> :PlugInstall
+
+syntax enable
+filetype plugin indent on
 
 " GENERIC SETTINGS FROM VIMtutor ------------------------------------- "
 " When started as "evim", evim.vim will already have done these settings.
