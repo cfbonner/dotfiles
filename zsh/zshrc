@@ -1,0 +1,13 @@
+source ~/.zplug/init.zsh
+source ~/.nvm/nvm.sh
+
+eval "$(rbenv init - --no-rehash)"
+
+zplug 'mafredri/zsh-async'
+zplug 'sindresorhus/pure'
+zplug 'zsh-users/zsh-syntax-highlighting', defer:1
+zplug 'zsh-users/zsh-completions', defer:2
+
+zplug load
+
+DISABLE_AUTO_UPDATE="true" 
