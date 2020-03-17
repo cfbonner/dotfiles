@@ -1,16 +1,15 @@
 " Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
+" nnoremap <Left> :echoe "Use h"<CR>
+" nnoremap <Right> :echoe "Use l"<CR>
+" nnoremap <Up> :echoe "Use k"<CR>
+" nnoremap <Down> :echoe "Use j"<CR>
 
 let mapleader = "\<Space>"
 
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 " Toggle tabs
-nmap <leader>tc :tabclose<cr>
-nmap <leader>tn :tabnew<cr>
+nmap <leader>nt :tabnew<cr>
 " Toggle for relative line numbers
 nmap <leader>rn :set relativenumber<cr>
 nmap <leader>nr :set norelativenumber<cr>
@@ -73,7 +72,8 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " PLUGINS ------------------------------------------------------------ "
 call plug#begin()
   " Plug 'scrooloose/nerdtree'
@@ -85,8 +85,16 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
   Plug 'ngmy/vim-rubocop'
   Plug 'slim-template/vim-slim'
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-bundler'
+  Plug 'pangloss/vim-javascript'
+  Plug 'yuezk/vim-js'
+  Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 " run to install --> :PlugInstall
+let g:javascript_plugin_jsdoc = 1
+let g:vim_jsx_pretty_colorful_config = 1 " default 0
 
 syntax enable
 filetype plugin indent on
