@@ -1,5 +1,7 @@
 let mapleader = "\<Space>"
 
+set background=dark
+
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 " Toggle tabs
