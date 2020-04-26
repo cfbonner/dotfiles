@@ -1,7 +1,8 @@
 source ~/.zplug/init.zsh
 source ~/.nvm/nvm.sh
+source ~/bin/*
 
-eval "$(rbenv init - --no-rehash)"
+source $HOME/code/dotfiles/zsh/aliases
 
 zplug 'mafredri/zsh-async'
 zplug 'sindresorhus/pure'
@@ -11,3 +12,6 @@ zplug 'zsh-users/zsh-completions', defer:2
 zplug load
 
 DISABLE_AUTO_UPDATE="true" 
+
+eval "$(rbenv init - --no-rehash)"
+

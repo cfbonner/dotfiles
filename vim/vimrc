@@ -1,6 +1,9 @@
 let mapleader = "\<Space>"
 
 set background=dark
+set lazyredraw                  " Don't update while executing macros
+set backspace=indent,eol,start  " Sane backspace behavior
+
 
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
@@ -14,10 +17,12 @@ nmap <leader>nn :set number<cr>
 
 " Go to directory of current file
 nmap <leader>- :e %:h<cr>
-" Toggle nerdTree
-" nmap <D> NERDTreeRemoveFileCm<cr>
-" nmap <C-D> NERDTreeRemoveDirCmd<cr>
-" nmap <C-n> :NERDTreeToggle<cr>
+
+" Move up and down by visible lines if current line is wrapped
+nmap j gj
+nmap k gk
+
+" Add buffers to separate dir
 set undodir=~/.vim/tmp//,.
 set backupdir=~/.vim/tmp//,.
 set directory=~/.vim/tmp//,.
@@ -25,6 +30,9 @@ set directory=~/.vim/tmp//,.
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
+
+" Show search result before pressing enter
+" set incsearch
 
 " Disable adding new line to files
 set nofixendofline
@@ -35,14 +43,31 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" :W also acts as :w
-" command W w
+" vim-tmux-runner
+nnoremap <leader>tr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+nnoremap <leader>tlr :VtrOpenRunner {'orientation': 'v', 'percentage': 20}<cr>
+nnoremap <leader>irb :VtrOpenRunner {'orientation': 'h', 'percentage': 50, 'cmd': 'irb'}<cr>
+nnoremap <leader>ar :VtrAttachToPane<cr>
+nnoremap <leader>kr :VtrKillRunner<cr>
+nnoremap <leader>dr :VtrDetachRunner<cr>
+nnoremap <leader>cr :VtrClearRunner<cr>
+nnoremap <leader>fr :VtrFocusRunner<cr>
+nnoremap <leader>sf :VtrSendFile<cr>
+nnoremap <leader>ss :VtrSendLines<cr>
+
+" vim-rspec
+map <leader>rt :call RunCurrentSpecFile()<cr>
+map <leader>rs :call RunNearestSpec()<cr>
+map <leader>rr :call RunLastSpec()<cr>
+map <leader>ra :call RunAllSpecs()<cr>
+let g:rspec_command = "call VtrSendCommand('bundle exec rspec {spec}')"
+
 " Bind `q` to close the buffer for help files
-autocmd Filetype help nnoremap <buffer> q :q<CR>
+autocmd Filetype help nnoremap <buffer> q :q<cr>
 
 " Ack default behaviour won't open first result by default
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>gg :Ack!<Space>
 
 " Map CTRL-P for FuzzySearch
 nmap <C-p> :CtrlP<cr>
@@ -54,13 +79,11 @@ let g:ctrlp_use_caching = 0
 :set relativenumber
 :highlight lineNr ctermfg=145                    
 
-
-" Install VimPlug ---------------------------------------------------- "
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+" full zoom of window when necessary
+nnoremap <leader>z :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
 
 " The Silver Searcher ------------------------------------------------ "
 if executable('ag')
@@ -80,16 +103,21 @@ endif
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " PLUGINS ------------------------------------------------------------ "
 call plug#begin()
-  " Plug 'scrooloose/nerdtree'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'w0rp/ale'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'christoomey/vim-system-copy'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'christoomey/vim-tmux-runner'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-vinegar'
   Plug 'ngmy/vim-rubocop'
   Plug 'mileszs/ack.vim'
+  Plug 'thoughtbot/vim-rspec'
 
   "" language helpers
   Plug 'vim-ruby/vim-ruby'
@@ -98,6 +126,7 @@ call plug#begin()
   Plug 'pangloss/vim-javascript'
   Plug 'yuezk/vim-js'
   Plug 'maxmellon/vim-jsx-pretty'
+  Plug 'elixir-editors/vim-elixir' 
   "" oddball formatters
   Plug 'slim-template/vim-slim'
   Plug 'kchmck/vim-coffee-script'
@@ -124,6 +153,13 @@ filetype plugin indent on
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
+endif
+
+" Install VimPlug ---------------------------------------------------- "
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 if empty(glob('~/.vim/autoload/plug.vim'))
