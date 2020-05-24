@@ -4,6 +4,10 @@ set background=dark
 set lazyredraw                  " Don't update while executing macros
 set backspace=indent,eol,start  " Sane backspace behavior
 
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
 
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
@@ -37,11 +41,12 @@ set splitright
 " Disable adding new line to files
 set nofixendofline
 
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 
 " vim-tmux-runner
 nnoremap <leader>tr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>

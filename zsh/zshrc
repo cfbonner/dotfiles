@@ -2,7 +2,7 @@ source ~/.zplug/init.zsh
 source ~/.nvm/nvm.sh
 source ~/bin/*
 
-source $HOME/code/dotfiles/zsh/aliases
+source $HOME/Code/dotfiles/zsh/aliases
 
 zplug 'mafredri/zsh-async'
 zplug 'sindresorhus/pure'
@@ -15,3 +15,4 @@ DISABLE_AUTO_UPDATE="true"
 
 eval "$(rbenv init - --no-rehash)"
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
