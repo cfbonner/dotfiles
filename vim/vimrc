@@ -9,6 +9,9 @@ set backspace=indent,eol,start  " Sane backspace behavior
 :command W w
 :command Q q
 
+" Macros
+map <leader>fsl ggO# frozen_string_literal: true<CR><BS><BS><ESC><C-o>
+
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 " Toggle tabs
