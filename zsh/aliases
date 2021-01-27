@@ -1,5 +1,11 @@
 alias primate='cd ~/Primate'
 alias code='cd ~/Code'
+alias dotfiles='cd ~/Code/dotfiles'
 alias wds='DISABLE_SPRING=1 bin/webpack-dev-server'
-alias rs='bundle exec rails s'
+alias rs='bundle exec rails s -b 0.0.0.0'
+alias rt='bundle exec rails test'
+alias cl='clear'
 
+function primate () {
+  'primate && cd $1'
+}

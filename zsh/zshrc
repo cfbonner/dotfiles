@@ -13,6 +13,22 @@ zplug load
 
 DISABLE_AUTO_UPDATE="true" 
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+notify() {
+  if [[ $? = 0 ]]; then
+    afplay /System/Library/Sounds/Tink.aiff
+  else
+    afplay /System/Library/Sounds/Frog.aiff
+  fi
+}
+
 eval "$(rbenv init - --no-rehash)"
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/sbin:$PATH"

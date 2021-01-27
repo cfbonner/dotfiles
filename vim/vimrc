@@ -1,6 +1,8 @@
 let mapleader = "\<Space>"
 
 set background=dark
+syntax on
+hi Visual term=reverse cterm=reverse guibg=Grey
 set lazyredraw                  " Don't update while executing macros
 set backspace=indent,eol,start  " Sane backspace behavior
 
@@ -9,9 +11,7 @@ set backspace=indent,eol,start  " Sane backspace behavior
 :command W w
 :command Q q
 
-" Macros
 map <leader>fsl ggO# frozen_string_literal: true<CR><BS><BS><ESC><C-o>
-
 nmap <leader>vr :tabnew $MYVIMRC<cr>
 nmap <leader>so :source $MYVIMRC<cr>
 " Toggle tabs
@@ -77,6 +77,10 @@ autocmd Filetype help nnoremap <buffer> q :q<cr>
 cnoreabbrev Ack Ack!
 nnoremap <Leader>gg :Ack!<Space>
 
+"" Prettier
+let g:prettier#autoformat = 0
+let g:prettier#exec_cmd_path = "~/.nvm/versions/node/v15.5.1/bin/prettier"
+
 " Map CTRL-P for FuzzySearch
 nmap <C-p> :CtrlP<cr>
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
@@ -118,16 +122,17 @@ call plug#begin()
   Plug 'christoomey/vim-system-copy'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'christoomey/vim-tmux-runner'
+  Plug 'Chiel92/vim-autoformat'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-vinegar'
+  Plug 'tpope/vim-endwise'
   Plug 'ngmy/vim-rubocop'
   Plug 'mileszs/ack.vim'
   Plug 'thoughtbot/vim-rspec'
-
-  "" language helpers
+"" language helpers
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-bundler'
@@ -135,16 +140,20 @@ call plug#begin()
   Plug 'yuezk/vim-js'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'elixir-editors/vim-elixir' 
+  Plug 'posva/vim-vue'
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install',
+    \ 'for': ['ruby', 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
   "" oddball formatters
   Plug 'slim-template/vim-slim'
   Plug 'kchmck/vim-coffee-script'
 call plug#end()
 " run to install --> :PlugInstall
+"
 let g:javascript_plugin_jsdoc = 1
 let g:vim_jsx_pretty_colorful_config = 1 " default 0
 
 let g:ale_linters = {
-\   'javascript': ['eslint'],
 \   'ruby': ['rubocop'],
 \}
 " Only run linters named in ale_linters settings.
@@ -154,14 +163,8 @@ let g:ale_sign_column_always = 1
 " Disable ALE auto highlights
 let g:ale_set_highlights = 0
 
-syntax enable
+syntax on
 filetype plugin indent on
-
-" GENERIC SETTINGS FROM VIMtutor ------------------------------------- "
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
 
 " Install VimPlug ---------------------------------------------------- "
 if empty(glob('~/.vim/autoload/plug.vim'))
